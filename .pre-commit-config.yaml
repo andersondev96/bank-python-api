@@ -5,7 +5,9 @@ repos:
       - id: pylint
         name: Rodando Pylint
         entry: pylint
-        language: python
+        # Use the project's active Python environment so pylint can import project deps
+        # (pre-commit by default creates isolated envs which don't have SQLAlchemy/pytest)
+        language: system
         types: [python]
         args:
           - "--max-line-length=120"
