@@ -1,14 +1,15 @@
 repos:
-  - repo: https://github.com/pycqa/pylint
-    rev: v3.2.0
+  - repo: local
     hooks:
       - id: pylint
-        name: Rodando Pylint
+        name: pylint
         entry: pylint
-        # Use the project's active Python environment so pylint can import project deps
-        # (pre-commit by default creates isolated envs which don't have SQLAlchemy/pytest)
         language: system
         types: [python]
         args:
-          - "--max-line-length=120"
-          - "--disable=C0114"
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+            "--rcfile=.pylintrc", # Link to your config file
+            "--load-plugins=pylint.extensions.docparams", # Load an extension
+          ]
