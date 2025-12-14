@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, REAL, BIGINT
 from src.models.sqlite.settings.base import Base
 
-class PessoaFisica(Base):
+class PessoaFisicaTable(Base):
     # pylint: disable=too-few-public-methods
     __tablename__ = "pessoa_fisica"
 
