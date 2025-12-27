@@ -87,3 +87,31 @@ def test_get_pessoa_fisica_not_found():
 
     mock_connection.session.query.assert_called_once_with(PessoaFisicaTable)
     assert response is None
+
+def test_sacar_sucesso():
+    mock_connection = MockConnection()
+    repo = PessoaFisicaRepository(mock_connection)
+
+    mock_pf = MagicMock(spec=PessoaFisicaTable)
+    mock_pf.saldo = 2000.0
+    mock_connection.session.query.return_value.filter.return_value.one.return_value = mock_pf
+
+    resultado, mensagem = repo.sacar(1, 500.0)
+
+    assert resultado is True
+    assert "Saque de R$500.00 realizado com sucesso. Novo saldo: R$1500.00" in mensagem
+    assert mock_pf.saldo == 1500.0
+    mock_connection.session.commit.assert_called_once()
+
+def test_extrato_sucesso():
+    mock_connection = MockConnection()
+    repo = PessoaFisicaRepository(mock_connection)
+
+    mock_pf = MagicMock(spec=PessoaFisicaTable)
+    mock_pf.saldo = 2500.0
+    mock_connection.session.query.return_value.filter.return_value.one.return_value = mock_pf
+
+    resultado, mensagem = repo.extrato(1)
+
+    assert resultado is True
+    assert "Extrato - Saldo atual: R$2500.00" in mensagem

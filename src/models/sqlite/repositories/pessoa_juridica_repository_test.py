@@ -1,4 +1,4 @@
-from unittest import mock
+from unittest.mock import MagicMock
 import pytest
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.pessoa_juridica import PessoaJuridicaTable
@@ -6,7 +6,7 @@ from src.models.sqlite.repositories.pessoa_juridica_repository import PessoaJuri
 
 class MockConnection:
     def __init__(self) -> None:
-        self.session = mock.MagicMock()
+        self.session = MagicMock()
 
     def __enter__(self):
         return self
@@ -86,3 +86,31 @@ def test_read_pessoa_juridica_not_found():
 
     mock_connection.session.query.assert_called_once_with(PessoaJuridicaTable)
     assert response is None
+
+def test_sacar_sucesso():
+    mock_connection = MockConnection()
+    repo = PessoaJuridicaRepository(mock_connection)
+
+    mock_pj = MagicMock(spec=PessoaJuridicaTable)
+    mock_pj.saldo = 2000.0
+    mock_connection.session.query.return_value.filter.return_value.one.return_value = mock_pj
+
+    resultado, mensagem = repo.sacar(1, 500.0)
+
+    assert resultado is True
+    assert "Saque de R$500.00 realizado com sucesso. Novo saldo: R$1500.00" in mensagem
+    assert mock_pj.saldo == 1500.0
+    mock_connection.session.commit.assert_called_once()
+
+def test_extrato_sucesso():
+    mock_connection = MockConnection()
+    repo = PessoaJuridicaRepository(mock_connection)
+
+    mock_pj = MagicMock(spec=PessoaJuridicaTable)
+    mock_pj.saldo = 2500.0
+    mock_connection.session.query.return_value.filter.return_value.one.return_value = mock_pj
+
+    resultado, mensagem = repo.extrato(1)
+
+    assert resultado is True
+    assert "Extrato - Saldo atual: R$2500.00" in mensagem

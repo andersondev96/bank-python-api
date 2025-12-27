@@ -19,3 +19,11 @@ class PessoaJuridicaRepositoryInterface(ABC):
     @abstractmethod
     def read_pessoa_juridica(self, pessoa_juridica_id: int) -> PessoaJuridicaTable:
         pass
+
+    @abstractmethod
+    def sacar(self, pessoa_juridica_id: int, valor: float) -> tuple[bool, str]:
+        pass
+
+    @abstractmethod
+    def extrato(self, pessoa_juridica_id: int) -> tuple[bool, str]:
+        pass
