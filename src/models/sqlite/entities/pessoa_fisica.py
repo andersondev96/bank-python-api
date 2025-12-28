@@ -16,6 +16,10 @@ class PessoaFisicaTable(Base):
 
     def __repr__(self):
         return (
-            f"PessoaFisica: [name={self.nome_completo}, email={self.email}, "
-            f"celular={self.celular}, categoria={self.categoria}, saldo={self.saldo}]"
+            f"PessoaFisica("
+            f"id={self.id}, "
+            f"nome={self.nome_completo}, "
+            f"email={self.email}, "
+            f"categoria={self.categoria}, "
+            f"saldo=R${self.saldo:.2f})"
         )

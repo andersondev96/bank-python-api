@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 from src.models.sqlite.entities.pessoa_juridica import PessoaJuridicaTable
 
-class PessoaJuridicaRepositoryInterface(ABC):
 
+class PessoaJuridicaRepositoryInterface(ABC):
     @abstractmethod
-    def create_pessoa_juridica(  # pylint: disable=too-many-arguments, too-many-positional-arguments
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def create_pessoa_juridica(
         self,
         faturamento: float,
         idade: int,
@@ -17,7 +19,7 @@ class PessoaJuridicaRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def read_pessoa_juridica(self, pessoa_juridica_id: int) -> PessoaJuridicaTable:
+    def read_pessoa_juridica(self, pessoa_juridica_id: int) -> Optional[PessoaJuridicaTable]:
         pass
 
     @abstractmethod

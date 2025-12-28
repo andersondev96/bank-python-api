@@ -8,7 +8,8 @@ disable=
       C0209, # Consider-using-f-string
       E0015, # unrecognized-option
       C0321, # multiple-statements
-      W0719 # broad-exception-raised
+      W0719 # broad-exception-raisedredefined-outer-name,
+
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists
@@ -455,7 +456,10 @@ disable=raw-checker-failed,
         deprecated-pragma,
         use-symbolic-message-instead,
         use-implicit-booleaness-not-comparison-to-string,
-        use-implicit-booleaness-not-comparison-to-zero
+        use-implicit-booleaness-not-comparison-to-zero,
+        missing-module-docstring,
+        missing-class-docstring,
+        missing-function-docstring
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

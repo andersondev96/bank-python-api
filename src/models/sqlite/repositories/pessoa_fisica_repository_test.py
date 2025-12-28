@@ -3,16 +3,7 @@ import pytest
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.pessoa_fisica import PessoaFisicaTable
 from src.models.sqlite.repositories.pessoa_fisica_repository import PessoaFisicaRepository
-
-class MockConnection:
-    def __init__(self):
-        self.session = MagicMock()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+from src.models.sqlite.repositories.test_utils import MockConnection
 
 def test_insert_pessoa_fisica():
     mock_connection = MockConnection()

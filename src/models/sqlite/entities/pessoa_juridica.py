@@ -16,8 +16,10 @@ class PessoaJuridicaTable(Base):
 
     def __repr__(self):
         return (
-            f"PessoaJuridica: [nome_fantasia={self.nome_fantasia}, "
-            f"email_corporativo={self.email_corporativo}, celular={self.celular}, "
-            f"categoria={self.categoria}, saldo={self.saldo}, "
-            f"faturamento={self.faturamento}]"
+            f"PessoaJuridica("
+            f"id={self.id}, "
+            f"nome_fantasia={self.nome_fantasia}, "
+            f"email={self.email_corporativo}, "
+            f"categoria={self.categoria}, "
+            f"saldo=R${self.saldo:.2f})"
         )
