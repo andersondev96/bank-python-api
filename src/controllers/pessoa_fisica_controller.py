@@ -1,10 +1,10 @@
-# src/controllers/pessoa_fisica_controller.py
 from typing import Optional, Tuple
 from src.models.sqlite.repositories.pessoa_fisica_repository import PessoaFisicaRepository
 from src.models.sqlite.entities.pessoa_fisica import PessoaFisicaTable
+from .interfaces.pessoa_fisica_controller import PessoaFisicaControllerInterface
 
 
-class PessoaFisicaController:
+class PessoaFisicaController(PessoaFisicaControllerInterface):
     def __init__(self, repository: PessoaFisicaRepository) -> None:
         self.repository = repository
 

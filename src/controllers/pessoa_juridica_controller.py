@@ -1,9 +1,10 @@
 from typing import Optional, Tuple
 from src.models.sqlite.repositories.pessoa_juridica_repository import PessoaJuridicaRepository
 from src.models.sqlite.entities.pessoa_juridica import PessoaJuridicaTable
+from .interfaces.pessoa_juridica_controller import PessoaJuridicaControllerInterface
 
 
-class PessoaJuridicaController:
+class PessoaJuridicaController(PessoaJuridicaControllerInterface):
     def __init__(self, repository: PessoaJuridicaRepository) -> None:
         self.repository = repository
 
