@@ -22,11 +22,18 @@ class TestBaseController:
         assert "Campo 'email' é obrigatório" in msg
 
     def test_formatar_resposta_sucesso(self):
-        resposta = BaseController.formatar_resposta_sucesso("saque", "R$500")
+        resposta = BaseController.formatar_resposta_sucesso("Saque realizado com sucesso", "R$500")
         assert resposta == {
             "success": True,
-            "message": "saque realizado com sucesso",
+            "message": "Saque realizado com sucesso",
             "details": "R$500"
+        }
+
+    def test_formatar_resposta_sucesso_sem_detalhes(self):
+        resposta = BaseController.formatar_resposta_sucesso("Operação realizada")
+        assert resposta == {
+            "success": True,
+            "message": "Operação realizada"
         }
 
     def test_formatar_resposta_erro(self):

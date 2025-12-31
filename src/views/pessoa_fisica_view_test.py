@@ -6,6 +6,7 @@ from src.views.pessoa_fisica_view import PessoaFisicaView
 from src.controllers.pessoa_fisica_controller import PessoaFisicaController
 from src.views.http_types.http_request import HttpRequest
 from src.models.sqlite.entities.pessoa_fisica import PessoaFisicaTable
+from src.views.view_test_base import ViewTestBase
 
 @pytest.fixture
 def controller():
@@ -28,29 +29,16 @@ def mock_pessoa_fisica():
     mock.saldo = 10000.0
     return mock
 
-class TestPessoaFisicaView:
+class TestPessoaFisicaView(ViewTestBase):
     """Testes unitários completos para PessoaFisicaView."""
 
     # ----- TESTES DE AÇÃO INVÁLIDA -----
 
     def test_handle_acao_invalida(self, view):
-        """Testa ação inválida retorna 400."""
-        request = HttpRequest(body={"action": "acao_invalida"})
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert response.body == {
-            "success": False,
-            "message": "Ação 'acao_invalida' inválida"
-        }
+        self.check_handle_acao_invalida(view)
 
     def test_handle_sem_acao(self, view):
-        """Testa request sem ação retorna 400."""
-        request = HttpRequest(body={})
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert "Ação (action) é obrigatória" in response.body["message"]
+        self.check_handle_sem_acao(view)
 
     # ----- TESTES DE CRIAR -----
 
@@ -72,7 +60,7 @@ class TestPessoaFisicaView:
         controller.criar.assert_called_once_with(dados_validos)
         assert response.status_code == HTTPStatus.CREATED
         assert response.body["success"] is True
-        assert "Criação de Pessoa Física realizado com sucesso" in response.body["message"]
+        assert "Criação de Pessoa Física realizada com sucesso" in response.body["message"]
 
     def test_criar_falta_campo_obrigatorio(self, view, controller):
         """Testa criação sem campo obrigatório retorna 400."""
@@ -149,96 +137,27 @@ class TestPessoaFisicaView:
     # ----- TESTES DE SACAR -----
 
     def test_sacar_sucesso(self, view, controller):
-        """Testa saque com sucesso."""
-        controller.sacar.return_value = (True, "Saque de R$500.00 realizado")
-
-        request = HttpRequest(
-            body={"action": "sacar", "valor": "500.0"},
-            param={"id": "1"}
-        )
-        response = view.handle(request)
-
-        controller.sacar.assert_called_once_with(1, 500.0)
-        assert response.status_code == HTTPStatus.OK
-        assert response.body["success"] is True
+        self.check_sacar_sucesso(view, controller)
 
     def test_sacar_sem_id(self, view, controller):
-        """Testa saque sem ID."""
-        request = HttpRequest(body={"action": "sacar", "valor": "500.0"})
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert "Parâmetro 'id' é obrigatório" in response.body["message"]
-        controller.sacar.assert_not_called()
+        self.check_sacar_sem_id(view, controller)
 
     def test_sacar_sem_valor(self, view):
-        """Testa saque sem valor."""
-        request = HttpRequest(
-            body={"action": "sacar"},
-            param={"id": "1"}
-        )
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert "Campo 'valor' é obrigatório" in response.body["message"]
+        self.check_sacar_sem_valor(view)
 
     def test_sacar_valor_invalido(self, view):
-        """Testa saque com valor não numérico."""
-        request = HttpRequest(
-            body={"action": "sacar", "valor": "abc"},
-            param={"id": "1"}
-        )
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert "Campo 'valor' deve ser um número válido" in response.body["message"]
+        self.check_sacar_valor_invalido(view)
 
     def test_sacar_falha_saldo_insuficiente(self, view, controller):
-        """Testa saque com falha (saldo insuficiente)."""
-        controller.sacar.return_value = (False, "Saldo insuficiente")
-
-        request = HttpRequest(
-            body={"action": "sacar", "valor": "10000.0"},
-            param={"id": "1"}
-        )
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert response.body["success"] is False
+        self.check_sacar_falha_saldo_insuficiente(view, controller)
 
     # ----- TESTES DE EXTRATO -----
 
     def test_extrato_sucesso(self, view, controller):
-        """Testa extrato com sucesso."""
-        controller.extrato.return_value = (True, "Saldo: R$10000.00")
-
-        request = HttpRequest(
-            body={"action": "extrato"},
-            param={"id": "1"}
-        )
-        response = view.handle(request)
-
-        controller.extrato.assert_called_once_with(1)
-        assert response.status_code == HTTPStatus.OK
-        assert response.body["success"] is True
+        self.check_extrato_sucesso(view, controller)
 
     def test_extrato_sem_id(self, view):
-        """Testa extrato sem ID."""
-        request = HttpRequest(body={"action": "extrato"})
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert "Parâmetro 'id' é obrigatório" in response.body["message"]
+        self.check_extrato_sem_id(view)
 
     def test_extrato_nao_encontrado(self, view, controller):
-        """Testa extrato de pessoa não encontrada."""
-        controller.extrato.return_value = (False, "Pessoa não encontrada")
-
-        request = HttpRequest(
-            body={"action": "extrato"},
-            param={"id": "999"}
-        )
-        response = view.handle(request)
-
-        assert response.status_code == HTTPStatus.NOT_FOUND
-        assert response.body["success"] is False
+        self.check_extrato_nao_encontrado(view, controller)
