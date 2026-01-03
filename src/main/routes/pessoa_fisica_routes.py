@@ -20,3 +20,35 @@ def create_pessoa_fisica():
 
     http_response = view.handle(http_request)
     return jsonify(http_response.body), http_response.status_code
+
+@pessoa_fisica_routes_bp.route("/pessoa-fisica/<int:person_id>", methods=["GET"])
+def get_pessoa_fisica(person_id):
+    http_request = HttpRequest(
+        body={ "action": "buscar" },
+        param={ "id": person_id }
+    )
+    view = pessoa_fisica_composer()
+    http_response = view.handle(http_request)
+
+    return jsonify(http_response.body), http_response.status_code
+
+@pessoa_fisica_routes_bp.route("/pessoa-fisica/<int:person_id>/sacar", methods=["POST"])
+def sacar_pessoa_fisica(person_id):
+    body = request.json or {}
+    body["action"] = "sacar"
+    http_request = HttpRequest(body=body, param={"id": person_id})
+    view = pessoa_fisica_composer()
+
+    http_response = view.handle(http_request)
+    return jsonify(http_response.body), http_response.status_code
+
+@pessoa_fisica_routes_bp.route("/pessoa-fisica/<int:person_id>/extrato", methods=["GET"])
+def extrato_pessoa_fisica(person_id):
+    http_request = HttpRequest(
+        body={ "action": "extrato" },
+        param={ "id": person_id }
+    )
+    view = pessoa_fisica_composer()
+    http_response = view.handle(http_request)
+
+    return jsonify(http_response.body), http_response.status_code

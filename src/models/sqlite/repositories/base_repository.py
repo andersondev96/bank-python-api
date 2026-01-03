@@ -76,9 +76,13 @@ class BaseRepository(ABC, Generic[T]):
 
         with self.db_connection as database:
             try:
-                entity = self._get_by_id(entity_id)
-
-                if entity is None:
+                try:
+                    entity = (
+                        database.session.query(self.model)
+                        .filter(self.model.id == entity_id)
+                        .one()
+                    )
+                except NoResultFound:
                     return False, f"{nome_entidade} com ID {entity_id} não encontrada"
 
                 is_valid, error_msg = self._check_balance(entity.saldo, valor)

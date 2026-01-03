@@ -9,11 +9,13 @@ class ControllerFactory:
 
     @staticmethod
     def criar_pessoa_fisica_controller(db_conn) -> PessoaFisicaController:
+        db_conn.connection_to_db()
         repository = PessoaFisicaRepository(db_conn)
         return PessoaFisicaController(repository)
 
     @staticmethod
     def criar_pessoa_juridica_controller(db_conn) -> PessoaJuridicaController:
+        db_conn.connection_to_db()
         repository = PessoaJuridicaRepository(db_conn)
         return PessoaJuridicaController(repository)
 
