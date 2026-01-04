@@ -1,4 +1,5 @@
 from src.controllers.base_controller import BaseController
+from src.errors.error_types.http_bad_request import HttpBadRequestError
 
 
 class TestBaseController:
@@ -42,3 +43,13 @@ class TestBaseController:
             "success": False,
             "message": "Saldo insuficiente"
         }
+
+    def test_formatar_resposta_erro_com_excecao(self):
+        erro = HttpBadRequestError("Erro personalizado")
+        resposta = BaseController.formatar_resposta_erro(erro)
+        assert resposta["message"] == "Erro personalizado"
+        assert resposta["success"] is False
+
+    def test_formatar_resposta_erro_com_excecao_generica(self):
+        resposta = BaseController.formatar_resposta_erro(Exception("Erro genérico"))
+        assert resposta["message"] == "Erro genérico"

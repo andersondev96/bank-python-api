@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple, List, Union
 
 
 class BaseController(ABC):
@@ -23,7 +23,8 @@ class BaseController(ABC):
         return resposta
 
     @staticmethod
-    def formatar_resposta_erro(mensagem: str) -> Dict[str, Any]:
+    def formatar_resposta_erro(erro: Union[str, Exception]) -> Dict[str, Any]:
+        mensagem = getattr(erro, "message", str(erro))
         return {
             "success": False,
             "message": mensagem

@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from src.views.http_types.http_request import HttpRequest
+from src.errors.error_types.http_not_found import HttpNotFoundError
 
 
 class ViewTestBase:
@@ -67,7 +68,7 @@ class ViewTestBase:
         assert "Parâmetro 'id' é obrigatório" in response.body["message"]
 
     def check_extrato_nao_encontrado(self, view, controller):
-        controller.extrato.return_value = (False, "Pessoa não encontrada")
+        controller.extrato.side_effect = HttpNotFoundError("Pessoa não encontrada")
         request = HttpRequest(body={"action": "extrato"}, param={"id": "999"})
         response = view.handle(request)
         assert response.status_code == HTTPStatus.NOT_FOUND

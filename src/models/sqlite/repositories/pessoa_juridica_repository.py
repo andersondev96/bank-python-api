@@ -1,4 +1,5 @@
 from typing import Optional
+from src.errors.error_types.http_not_found import HttpNotFoundError
 from src.models.sqlite.repositories.base_repository import BaseRepository
 from src.models.sqlite.interfaces.pessoa_juridica_repository import (
     PessoaJuridicaRepositoryInterface
@@ -55,6 +56,6 @@ class PessoaJuridicaRepository(
         pessoa_juridica = self._get_by_id(pessoa_juridica_id)
 
         if pessoa_juridica is None:
-            return False, f"Pessoa jurídica com ID {pessoa_juridica_id} não encontrada"
+            raise HttpNotFoundError(f"Pessoa jurídica com ID {pessoa_juridica_id} não encontrada")
 
         return True, f"Extrato - Saldo atual: R${pessoa_juridica.saldo:.2f}"
