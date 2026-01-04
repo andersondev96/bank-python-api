@@ -1,11 +1,11 @@
 # 🏦 Sistema Bancário com API
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/andersondev96/bank-python-api?color=blue">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/andersondev96/bank-python-api">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/andersondev96/bank-python-api?style=for-the-badge&color=blue">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/andersondev96/bank-python-api?style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-bright?style=for-the-badge&color=blue">
    <a href="https://www.linkedin.com/in/anderson-fernandes96/">
-      <img alt="Feito por Anderson" src="https://img.shields.io/badge/feito%20por-Anderson%20Fernandes-blue">
+      <img alt="Feito por Anderson" src="https://img.shields.io/badge/feito%20por-Anderson%20Fernandes-blue?style=for-the-badge">
    </a>
 </p>
 
@@ -16,9 +16,12 @@
 <p align="center">
   <a href="#-sobre-o-projeto">Sobre</a> •
   <a href="#-features">Features</a> •
-  <a href="#-tecnologias">Tecnologias</a> •
-  <a href="#-instalação-e-execução">Instalação</a> •
+  <a href="#-tecnologias-utilizadas">Tecnologias</a> •
   <a href="#-documentação-da-api">Documentação</a> •
+  <a href="#%EF%B8%8F-instalação-e-execução">Instalação</a> •
+  <a href="#-testes">Testes</a> •
+  <a href="#-como-contribuir">Como contribuir</a> •
+  <a href="#-licença">Licença</a> •
   <a href="#-autor">Autor</a>
 </p>
 
@@ -48,7 +51,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 [![Pytest Badge](https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&logoColor=fff&style=for-the-badge)](https://docs.pytest.org/en/stable)
 [![SQLite Badge](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=fff&style=for-the-badge)](https://sqlite.org/docs.html)
 
-## ⚙️ Instalação e Execuação
+## ⚙️ Instalação e Execução
 
 ### Pré-requisitos
 Antes de começar, você vai precisar ter instalado em sua máquina o [Python 3.10+](https://www.python.org/downloads/).
@@ -115,7 +118,7 @@ A API estará disponível na porta `3000`. Acesse: `http://localhost:3000`
 
 Teste as requisições utilizando o [**Insomnia**](https://insomnia.rest) ou  [**Postman**](https://www.postman.com).
 
-[![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](bank_postman_collection.json)
+[![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](bank.postman_collection)
 
 ## 🧪 Testes
 Execute a suíte de testes com pytest:
